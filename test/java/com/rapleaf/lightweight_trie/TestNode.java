@@ -1,8 +1,8 @@
-package com.rapleaf.analysis_lib.radix_tree;
+package com.rapleaf.lightweight_trie;
 
 import com.rapleaf.analysis_lib.AnalysisLibTestCase;
 
-public class TestNode extends AnalysisLibTestCase {
+public class TestNode extends TestCase {
   private static final Object MARKER_OBJECT = new Object();
   private static final Object MARKER_OBJECT2 = new Object();
   private static final Object MARKER_OBJECT3 = new Object();
