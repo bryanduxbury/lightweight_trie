@@ -1,6 +1,6 @@
 package com.rapleaf.lightweight_trie;
 
-import com.rapleaf.analysis_lib.AnalysisLibTestCase;
+import junit.framework.TestCase;
 
 public class TestNode extends TestCase {
   private static final Object MARKER_OBJECT = new Object();
