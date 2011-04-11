@@ -3,13 +3,13 @@ package com.rapleaf.lightweight_trie;
 import java.util.Arrays;
 
 
-public class Node<V> {
+public class MutableNode<V> {
   private final char[] chars;
 
   private V value;
-  private Node[] children;
+  private MutableNode[] children;
 
-  public Node(char[] origChars, int off, int len, V value) {
+  public MutableNode(char[] origChars, int off, int len, V value) {
     this.value = value;
     chars = new char[len];
     System.arraycopy(origChars, off, chars, 0, len);
@@ -22,8 +22,8 @@ public class Node<V> {
 
     // if there are no children, then add a new single child with all of the chars.
     if (children == null) {
-      children = new Node[] {
-        new Node(origChars, off, origChars.length - off, value)
+      children = new MutableNode[] {
+        new MutableNode(origChars, off, origChars.length - off, value)
       };
       return;
     }
@@ -31,7 +31,7 @@ public class Node<V> {
     // there are existing children. scan them to see if there are any with
     // matching prefixes
     for (int i = 0; i < children.length; i++) {
-      Node childNode = children[i];
+      MutableNode childNode = children[i];
       int commonLength = getCommonLength(origChars, off, childNode.chars);
       if (commonLength == 0) {
         // no match. continue on.
@@ -43,9 +43,9 @@ public class Node<V> {
         // is currently longer than the match length. we need to split the child
         // node.
 
-        Node replacement = new Node(childNode.chars, 0, commonLength, null);
-        replacement.children = new Node[] {
-            new Node(childNode.chars, commonLength, childNode.chars.length - commonLength, childNode.value)
+        MutableNode replacement = new MutableNode(childNode.chars, 0, commonLength, null);
+        replacement.children = new MutableNode[] {
+            new MutableNode(childNode.chars, commonLength, childNode.chars.length - commonLength, childNode.value)
         };
         children[i] = replacement;
         replacement.insert(origChars, off + commonLength, value);
@@ -64,10 +64,10 @@ public class Node<V> {
     }
 
     // if we get here, then we never found *any* match. insert a new child node.
-    Node[] oldChildren = children;
-    children = new Node[oldChildren.length + 1];
+    MutableNode[] oldChildren = children;
+    children = new MutableNode[oldChildren.length + 1];
     System.arraycopy(oldChildren, 0, children, 0, oldChildren.length);
-    children[children.length - 1] = new Node(origChars, off, origChars.length - off, value);
+    children[children.length - 1] = new MutableNode(origChars, off, origChars.length - off, value);
   }
 
   private static int getCommonLength(char[] origChars, int off, char[] prefixChars) {
@@ -81,7 +81,7 @@ public class Node<V> {
     return i;
   }
 
-  Node[] getChildren() {
+  MutableNode[] getChildren() {
     return children;
   }
 
@@ -103,7 +103,7 @@ public class Node<V> {
     // there are existing children. scan them to see if there are any with
     // matching prefixes
     for (int i = 0; i < children.length; i++) {
-      Node<V> childNode = children[i];
+      MutableNode<V> childNode = children[i];
       int commonLength = getCommonLength(charArray, off, childNode.chars);
 
       // if there was any match...

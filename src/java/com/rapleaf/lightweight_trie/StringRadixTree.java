@@ -6,12 +6,12 @@ import java.util.Set;
 
 public class StringRadixTree<V> implements Map<String, V> {
 
-  private Node<V> root = new Node<V>("".toCharArray(), 0, 0, null);
+  private MutableNode<V> root = new MutableNode<V>("".toCharArray(), 0, 0, null);
   private int size = 0;
 
   @Override
   public void clear() {
-    root = new Node<V>("".toCharArray(), 0, 0, null);
+    root = new MutableNode<V>("".toCharArray(), 0, 0, null);
   }
 
   @Override
