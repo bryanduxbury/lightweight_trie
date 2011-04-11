@@ -1,4 +1,4 @@
-package com.rapleaf.analysis_lib.radix_tree;
+package com.rapleaf.lightweight_trie;
 
 public abstract class AbstractNode<V> {
   protected V value;

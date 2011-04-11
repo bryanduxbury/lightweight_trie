@@ -1,4 +1,4 @@
-package com.rapleaf.analysis_lib.radix_tree;
+package com.rapleaf.lightweight_trie;
 
 /**
  * Node implementation that doesn't allow for children (to save bytes)
