@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-public class StringRadixTree<V> implements Map<String, V> {
+public class MutableStringRadixTreeMap<V> implements Map<String, V> {
 
   MutableNode<V> root = new MutableNode<V>("".toCharArray(), 0, 0, null);
   private int size = 0;
