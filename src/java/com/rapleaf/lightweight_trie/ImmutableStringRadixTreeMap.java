@@ -23,7 +23,7 @@ public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
 
     if (n.getChildren().length == 1) {
       // this is a single-child node
-      return new SingleChildNode<V>(n.getPrefix(), n.getValue(), null);
+      return new SingleChildNode<V>(n.getPrefix(), n.getValue(), optimize(n.getChildren()[0]));
     }
 
     // it's a multi-child node
