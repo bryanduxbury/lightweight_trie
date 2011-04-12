@@ -37,12 +37,38 @@ public class TestMutableStringRadixTreeMap extends TestCase {
     assertNull(map.get("blah2"));
     assertTrue(map.isEmpty());
   }
-  
+
   public void testAll() {
     MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
     map.putAll(new HashMap<String, Integer>(){{put("blah1", 1); put("blah2", 2);}});
     assertEquals(2, map.size());
     assertEquals(Integer.valueOf(1), map.get("blah1"));
     assertEquals(Integer.valueOf(2), map.get("blah2"));
+  }
+
+  public void testLotsOfElements() {
+    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < 50; i++) {
+      sb.append("a");
+      map.put(sb.toString(), i);
+    }
+
+    sb = new StringBuilder();
+    for (int i = 0; i < 50; i++) {
+      sb.append("a");
+      assertEquals(Integer.valueOf(i), map.get(sb.toString()));
+    }
+  }
+
+  public void testReplaceValue() {
+    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+    assertFalse(map.containsKey("blah"));
+    assertNull(map.get("blah"));
+    map.put("blah", 1);
+    assertTrue(map.containsKey("blah"));
+    assertEquals(Integer.valueOf(1), map.get("blah"));
+    map.put("blah", 2);
+    assertEquals(Integer.valueOf(2), map.get("blah"));
   }
 }
