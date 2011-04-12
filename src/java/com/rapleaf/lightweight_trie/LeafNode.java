@@ -5,7 +5,7 @@ package com.rapleaf.lightweight_trie;
  * 
  * @param <V>
  */
-public class LeafNode<V> extends AbstractNode<V> {
+final class LeafNode<V> extends AbstractNode<V> {
   private final char[] prefix;
 
   public LeafNode(char[] prefix, V value) {

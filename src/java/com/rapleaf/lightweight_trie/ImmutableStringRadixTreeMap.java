@@ -4,8 +4,13 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * An immutable String-keyed radix tree that is especially optimized for memory
+ * use. To instantiate, you must pass in a MutableStringRadixTreeMap.
+ * 
+ * @param <V>
+ */
 public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
-
   private final AbstractNode<V> root;
   private final int size;
 
@@ -13,7 +18,6 @@ public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
     root = optimize(mutableRadixTree.root);
     size = mutableRadixTree.size();
   }
-
 
   private AbstractNode<V> optimize(MutableNode<V> n) {
     if (n.getChildren() == null) {
@@ -34,7 +38,6 @@ public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
     return new MultiChildNode<V>(n.getPrefix(), n.getValue(), optimizedChildren);
   }
 
-
   @Override
   public boolean containsKey(Object arg0) {
     return get(arg0) != null;
@@ -53,7 +56,7 @@ public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
   @Override
   public V get(Object key) {
     if (key instanceof String) {
-      String skey = (String)key;
+      String skey = (String) key;
       return root.get(skey.toCharArray(), 0);
     }
     throw new IllegalArgumentException("Keys must be of type String");

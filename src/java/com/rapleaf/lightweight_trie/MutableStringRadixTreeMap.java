@@ -4,8 +4,13 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * A String-keyed Map implementation backed by a radix tree. This implementation
+ * is substantialy more memory efficient than alternatives like HashMap.
+ * 
+ * @param <V>
+ */
 public class MutableStringRadixTreeMap<V> implements Map<String, V> {
-
   MutableNode<V> root = new MutableNode<V>("".toCharArray(), 0, 0, null);
   private int size = 0;
 

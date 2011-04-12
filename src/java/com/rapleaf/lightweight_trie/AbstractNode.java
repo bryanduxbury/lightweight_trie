@@ -1,6 +1,6 @@
 package com.rapleaf.lightweight_trie;
 
-public abstract class AbstractNode<V> {
+abstract class AbstractNode<V> {
   protected V value;
 
   protected AbstractNode(V value) {

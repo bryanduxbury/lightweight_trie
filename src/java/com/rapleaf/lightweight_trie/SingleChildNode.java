@@ -1,7 +1,6 @@
 package com.rapleaf.lightweight_trie;
 
-public class SingleChildNode<V> extends AbstractNode<V> {
-
+final class SingleChildNode<V> extends AbstractNode<V> {
   private final char[] prefix;
   private final AbstractNode<V> child;
 

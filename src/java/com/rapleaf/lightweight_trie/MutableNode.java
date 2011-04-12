@@ -3,7 +3,7 @@ package com.rapleaf.lightweight_trie;
 import java.util.Arrays;
 
 
-public class MutableNode<V> {
+final class MutableNode<V> {
   private final char[] chars;
 
   private V value;
