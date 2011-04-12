@@ -54,6 +54,7 @@ public class MutableStringRadixTreeMap<V> implements Map<String, V> {
 
   @Override
   public V put(String key, V value) {
+    size++;
     root.insert(key.toCharArray(), 0, value);
     return value;
   }
