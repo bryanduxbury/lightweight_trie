@@ -38,7 +38,7 @@ public class TestMutableStringRadixTreeMap extends TestCase {
     assertTrue(map.isEmpty());
   }
 
-  public void testAll() {
+  public void testPutAll() {
     MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
     map.putAll(new HashMap<String, Integer>(){{put("blah1", 1); put("blah2", 2);}});
     assertEquals(2, map.size());
