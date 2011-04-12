@@ -12,6 +12,7 @@ public class MutableStringRadixTreeMap<V> implements Map<String, V> {
   @Override
   public void clear() {
     root = new MutableNode<V>("".toCharArray(), 0, 0, null);
+    size = 0;
   }
 
   @Override

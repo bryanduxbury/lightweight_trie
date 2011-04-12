@@ -1,5 +1,7 @@
 package com.rapleaf.lightweight_trie;
 
+import java.util.HashMap;
+
 import junit.framework.TestCase;
 
 public class TestMutableStringRadixTreeMap extends TestCase {
@@ -23,5 +25,24 @@ public class TestMutableStringRadixTreeMap extends TestCase {
     map.put("blah", 1);
     assertTrue(map.containsKey("blah"));
     assertEquals(Integer.valueOf(1), map.get("blah"));
+  }
+
+  public void testClear() {
+    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+    map.put("blah", 1);
+    map.put("blah2", 2);
+
+    map.clear();
+    assertNull(map.get("blah"));
+    assertNull(map.get("blah2"));
+    assertTrue(map.isEmpty());
+  }
+  
+  public void testAll() {
+    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+    map.putAll(new HashMap<String, Integer>(){{put("blah1", 1); put("blah2", 2);}});
+    assertEquals(2, map.size());
+    assertEquals(Integer.valueOf(1), map.get("blah1"));
+    assertEquals(Integer.valueOf(2), map.get("blah2"));
   }
 }
