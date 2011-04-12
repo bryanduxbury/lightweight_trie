@@ -15,6 +15,8 @@
  */
 package com.rapleaf.lightweight_trie;
 
+import java.util.Arrays;
+
 abstract class AbstractNode<V> {
   protected V value;
 
@@ -27,4 +29,11 @@ abstract class AbstractNode<V> {
   public abstract AbstractNode<V>[] getChildren();
 
   public abstract char[] getPrefix();
+
+  @Override
+  public String toString() {
+    return "AbstractNode [getPrefix()=" + Arrays.toString(getPrefix())
+        + ", value=" + value + ", getChildren()="
+        + Arrays.toString(getChildren()) + "]";
+  }
 }

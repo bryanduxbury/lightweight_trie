@@ -50,6 +50,9 @@ public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
     for (int i = 0; i < optimizedChildren.length; i++) {
       optimizedChildren[i] = optimize(n.getChildren()[i]);
     }
+    if (n.getPrefix().length == 1) {
+      return new SingleLengthMultiChildNode<V>(n.getPrefix()[0], n.getValue(), optimizedChildren);
+    }
     return new MultiChildNode<V>(n.getPrefix(), n.getValue(), optimizedChildren);
   }
 

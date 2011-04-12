@@ -59,11 +59,24 @@ final class MutableNode<V> {
         // node.
 
         MutableNode replacement = new MutableNode(childNode.chars, 0, commonLength, null);
+        final MutableNode newChild = new MutableNode(childNode.chars, commonLength, childNode.chars.length - commonLength, childNode.value);
+        if (childNode.children != null) {
+          newChild.children = new MutableNode[childNode.children.length];
+          System.arraycopy(childNode.children, 0, newChild.children, 0, childNode.children.length);
+        }
+
         replacement.children = new MutableNode[] {
-            new MutableNode(childNode.chars, commonLength, childNode.chars.length - commonLength, childNode.value)
+            newChild
         };
         children[i] = replacement;
-        replacement.insert(origChars, off + commonLength, value);
+
+        // if we still have any chars left, recurse
+        if (commonLength < origChars.length - off) {
+          replacement.insert(origChars, off + commonLength, value);
+        } else {
+          // the split used up the available chars, so we're here!
+          replacement.value = value;
+        }
         return;
       }
 

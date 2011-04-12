@@ -33,4 +33,32 @@ public class TestMutableNode extends TestCase {
     assertEquals(MARKER_OBJECT2, n.get("xyz".toCharArray(), 0));
     assertEquals(MARKER_OBJECT3, n.get("xya".toCharArray(), 0));
   }
+
+  public void testSplit() {
+    MutableNode root = new MutableNode("".toCharArray(), 0, 0, null);
+    root.insert("brittany".toCharArray(), 0, null);
+    root.insert("brit".toCharArray(), 0, null);
+    root.insert("bryan".toCharArray(), 0, null);
+
+    // <null>
+    // -> br
+    //    -> it
+    //       -> tany
+    //    -> yan
+
+    assertEquals(1, root.getChildren().length);
+    final MutableNode br = root.getChildren()[0];
+    assertEquals("br", new String(br.getPrefix()));
+    assertEquals(2, br.getChildren().length);
+    MutableNode it = br.getChildren()[0];
+    assertEquals("it", new String(it.getPrefix()));
+    assertEquals(1, it.getChildren().length);
+    MutableNode tany = it.getChildren()[0];
+    assertEquals("tany", new String(tany.getPrefix()));
+    assertNull(tany.getChildren());
+
+    MutableNode yan = br.getChildren()[1];
+    assertEquals("yan", new String(yan.getPrefix()));
+    assertNull(yan.getChildren());
+  }
 }
