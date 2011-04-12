@@ -32,7 +32,7 @@ public class MutableNode<V> {
     // matching prefixes
     for (int i = 0; i < children.length; i++) {
       MutableNode childNode = children[i];
-      int commonLength = getCommonLength(origChars, off, childNode.chars);
+      int commonLength = Utils.getCommonLength(origChars, off, childNode.chars);
       if (commonLength == 0) {
         // no match. continue on.
         continue;
@@ -70,17 +70,6 @@ public class MutableNode<V> {
     children[children.length - 1] = new MutableNode(origChars, off, origChars.length - off, value);
   }
 
-  private static int getCommonLength(char[] origChars, int off, char[] prefixChars) {
-    int extent = Math.min(origChars.length-off, prefixChars.length);
-    int i = 0;
-    for (; i < extent; i++) {
-      if (origChars[off+i] != prefixChars[i]) {
-        break;
-      }
-    }
-    return i;
-  }
-
   MutableNode[] getChildren() {
     return children;
   }
@@ -104,7 +93,7 @@ public class MutableNode<V> {
     // matching prefixes
     for (int i = 0; i < children.length; i++) {
       MutableNode<V> childNode = children[i];
-      int commonLength = getCommonLength(charArray, off, childNode.chars);
+      int commonLength = Utils.getCommonLength(charArray, off, childNode.chars);
 
       // if there was any match...
       if (commonLength > 0) {
@@ -129,5 +118,13 @@ public class MutableNode<V> {
     // we scanned all the children and found no matches, so the key is not in
     // the tree.
     return null;
+  }
+
+  public char[] getPrefix() {
+    return chars;
+  }
+
+  public V getValue() {
+    return value;
   }
 }

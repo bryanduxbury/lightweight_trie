@@ -7,9 +7,7 @@ public abstract class AbstractNode<V> {
     this.value = value;
   }
 
-//  public abstract void insert(char[] toInsert, int startOffset, V value);
-//
-//  public abstract V get(char[] toInsert, int startOffset);
+  public abstract V get(char[] toInsert, int startOffset);
 
   public abstract AbstractNode<V>[] getChildren();
 

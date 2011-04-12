@@ -8,7 +8,7 @@ public class TestNode extends TestCase {
   private static final Object MARKER_OBJECT3 = new Object();
 
   public void testIt() {
-    Node n = new Node("".toCharArray(), 0, 0, MARKER_OBJECT);
+    MutableNode n = new MutableNode("".toCharArray(), 0, 0, MARKER_OBJECT);
     n.insert("xyz".toCharArray(), 0, MARKER_OBJECT2);
     assertEquals(1, n.getChildren().length);
     n.insert("xya".toCharArray(), 0, MARKER_OBJECT3);
