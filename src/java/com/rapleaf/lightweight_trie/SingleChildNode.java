@@ -23,8 +23,11 @@ public class SingleChildNode<V> extends AbstractNode<V> {
 
   @Override
   public V get(char[] toInsert, int startOffset) {
-    int commonLength = Utils.getCommonLength(toInsert, startOffset, prefix);
+    int commonLength = Utils.getCommonLength(toInsert, startOffset, child.getPrefix());
     if (commonLength > 0) {
+      if (commonLength == toInsert.length - startOffset && commonLength == child.getPrefix().length) {
+        return child.value;
+      }
       return child.get(toInsert, startOffset + commonLength);
     }
     return null;
