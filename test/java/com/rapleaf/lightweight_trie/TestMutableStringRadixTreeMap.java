@@ -71,4 +71,29 @@ public class TestMutableStringRadixTreeMap extends TestCase {
     map.put("blah", 2);
     assertEquals(Integer.valueOf(2), map.get("blah"));
   }
+
+  // TODO
+//  public void testEntrySet() {
+//    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+//    map.put("blah", 1);
+//    map.put("blah2", 2);
+//    map.put("foo", 7);
+//    map.put("bar", 15);
+//    map.put("LONGGGG one", 250);
+//
+//    Map<String, Integer> otherMap = new HashMap<String, Integer>();
+//    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+//      otherMap.put(entry.getKey(), entry.getValue());
+//    }
+//
+//    Map<String, Integer> expectedMap = new HashMap<String, Integer>(){{
+//      put("blah", 1);
+//      put("blah2", 2);
+//      put("foo", 7);
+//      put("bar", 15);
+//      put("LONGGGG one", 250);
+//    }};
+//
+//    assertEquals(expectedMap, otherMap);
+//  }
 }
