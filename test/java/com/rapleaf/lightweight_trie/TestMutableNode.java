@@ -2,7 +2,7 @@ package com.rapleaf.lightweight_trie;
 
 import junit.framework.TestCase;
 
-public class TestNode extends TestCase {
+public class TestMutableNode extends TestCase {
   private static final Object MARKER_OBJECT = new Object();
   private static final Object MARKER_OBJECT2 = new Object();
   private static final Object MARKER_OBJECT3 = new Object();
