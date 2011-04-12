@@ -14,7 +14,7 @@ public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
   private final AbstractNode<V> root;
   private final int size;
 
-  public ImmutableStringRadixTreeMap(MutableStringRadixTreeMap mutableRadixTree) {
+  public ImmutableStringRadixTreeMap(StringRadixTreeMap mutableRadixTree) {
     root = optimize(mutableRadixTree.root);
     size = mutableRadixTree.size();
   }

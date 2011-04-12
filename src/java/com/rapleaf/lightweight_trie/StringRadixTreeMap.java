@@ -10,7 +10,7 @@ import java.util.Set;
  * 
  * @param <V>
  */
-public class MutableStringRadixTreeMap<V> implements Map<String, V> {
+public class StringRadixTreeMap<V> implements Map<String, V> {
   MutableNode<V> root = new MutableNode<V>("".toCharArray(), 0, 0, null);
   private int size = 0;
 

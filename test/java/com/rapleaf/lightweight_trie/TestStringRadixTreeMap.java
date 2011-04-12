@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import junit.framework.TestCase;
 
-public class TestMutableStringRadixTreeMap extends TestCase {
+public class TestStringRadixTreeMap extends TestCase {
   public void testSize() throws Exception {
-    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+    StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
     assertEquals(0, map.size());
     assertTrue(map.isEmpty());
     map.put("blah", 1);
@@ -19,7 +19,7 @@ public class TestMutableStringRadixTreeMap extends TestCase {
   }
 
   public void testGetPut() {
-    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+    StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
     assertFalse(map.containsKey("blah"));
     assertNull(map.get("blah"));
     map.put("blah", 1);
@@ -28,7 +28,7 @@ public class TestMutableStringRadixTreeMap extends TestCase {
   }
 
   public void testClear() {
-    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+    StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
     map.put("blah", 1);
     map.put("blah2", 2);
 
@@ -39,7 +39,7 @@ public class TestMutableStringRadixTreeMap extends TestCase {
   }
 
   public void testPutAll() {
-    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+    StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
     map.putAll(new HashMap<String, Integer>(){{put("blah1", 1); put("blah2", 2);}});
     assertEquals(2, map.size());
     assertEquals(Integer.valueOf(1), map.get("blah1"));
@@ -47,7 +47,7 @@ public class TestMutableStringRadixTreeMap extends TestCase {
   }
 
   public void testLotsOfElements() {
-    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+    StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < 50; i++) {
       sb.append("a");
@@ -62,7 +62,7 @@ public class TestMutableStringRadixTreeMap extends TestCase {
   }
 
   public void testReplaceValue() {
-    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
+    StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
     assertFalse(map.containsKey("blah"));
     assertNull(map.get("blah"));
     map.put("blah", 1);
