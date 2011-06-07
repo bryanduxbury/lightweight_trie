@@ -23,6 +23,8 @@ import java.util.Set;
  * A String-keyed Map implementation backed by a radix tree. This implementation
  * is substantialy more memory efficient than alternatives like HashMap.
  * 
+ * Null keys are not allowed in this Map implementation.
+ * 
  * @param <V>
  */
 public class StringRadixTreeMap<V> implements Map<String, V> {
@@ -74,7 +76,13 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
   }
 
   @Override
+  /**
+   * Key may not be null.
+   */
   public V put(String key, V value) {
+    if (key == null) {
+      throw new NullPointerException(getClass().getSimpleName() + " does not allow null keys!");
+    }
     size++;
     root.insert(key.toCharArray(), 0, value);
     return value;
