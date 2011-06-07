@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * A String-keyed Map implementation backed by a radix tree. This implementation
- * is substantialy more memory efficient than alternatives like HashMap.
+ * is substantially more memory efficient than alternatives like HashMap.
  * 
  * Null keys are not allowed in this Map implementation.
  * 
