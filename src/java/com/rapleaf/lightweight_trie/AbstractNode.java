@@ -36,8 +36,8 @@ abstract class AbstractNode<V> {
 
   @Override
   public String toString() {
-    return "AbstractNode [getPrefix()=" + Arrays.toString(getPrefix())
+    return getClass().getSimpleName() + " <getPrefix()=" + Arrays.toString(getPrefix())
         + ", value=" + value + ", getChildren()="
-        + Arrays.toString(getChildren()) + "]";
+        + Arrays.toString(getChildren()) + ">";
   }
 }
