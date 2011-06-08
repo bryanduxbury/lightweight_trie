@@ -197,16 +197,6 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
     }
 
     @Override
-    public void clear() {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean contains(Object arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean isEmpty() {
       return StringRadixTreeMap.this.isEmpty();
     }

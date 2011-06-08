@@ -20,6 +20,11 @@ abstract class UnmodifiableAbstractSet<E> implements Set<E> {
   }
 
   @Override
+  public boolean contains(Object arg0) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public boolean containsAll(Collection<?> arg0) {
     throw new UnsupportedOperationException();
   }
