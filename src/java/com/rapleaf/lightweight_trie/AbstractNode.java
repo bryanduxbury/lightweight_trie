@@ -24,6 +24,10 @@ abstract class AbstractNode<V> {
     this.value = value;
   }
 
+  public V getValue() {
+    return value;
+  }
+
   public abstract V get(char[] toInsert, int startOffset);
 
   public abstract AbstractNode<V>[] getChildren();

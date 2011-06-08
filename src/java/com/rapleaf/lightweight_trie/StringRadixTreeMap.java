@@ -17,10 +17,7 @@ package com.rapleaf.lightweight_trie;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -32,181 +29,6 @@ import java.util.Set;
  * @param <V>
  */
 public class StringRadixTreeMap<V> implements Map<String, V> {
-  private final class KeySetIterator implements Iterator<String> {
-    private final EntrySetIterator iterator;
-
-    public KeySetIterator() {
-      iterator = new EntrySetIterator();
-    }
-
-    @Override
-    public boolean hasNext() {
-      return iterator.hasNext();
-    }
-
-    @Override
-    public String next() {
-      return iterator.next().getKey();
-    }
-
-    @Override
-    public void remove() {
-      throw new UnsupportedOperationException();
-    }
-  }
-
-  private final class KeySet extends UnmodifiableAbstractSet<String> {
-    @Override
-    public boolean contains(Object arg0) {
-      return StringRadixTreeMap.this.containsKey(arg0);
-    }
-
-    @Override
-    public boolean isEmpty() {
-      return StringRadixTreeMap.this.isEmpty();
-    }
-
-    @Override
-    public Iterator<String> iterator() {
-      return new KeySetIterator();
-    }
-
-    @Override
-    public int size() {
-      return StringRadixTreeMap.this.size();
-    }
-  }
-
-  private final class EntrySetIterator implements Iterator<Entry<String, V>> {
-    private final class IteratorEntry implements Entry<String, V> {
-      private final String key;
-      private final MutableNode<V> nextNode;
-
-      private IteratorEntry(String key, MutableNode<V> nextNode) {
-        this.key = key;
-        this.nextNode = nextNode;
-      }
-
-      @Override
-      public String getKey() {
-        return key;
-      }
-
-      @Override
-      public V getValue() {
-        return nextNode.getValue();
-      }
-
-      @Override
-      public V setValue(V value) {
-        throw new UnsupportedOperationException();
-      }
-    }
-
-    private LinkedList<Queue<MutableNode<V>>> search = new LinkedList<Queue<MutableNode<V>>>();
-    private LinkedList<MutableNode<V>> path = new LinkedList<MutableNode<V>>();
-    private Entry<String, V> cachedNext;
-
-    public EntrySetIterator() {
-      Queue<MutableNode<V>> q = new LinkedList<MutableNode<V>>();
-      q.add(root);
-      search.add(q);
-      // special placeholder.
-      path.push(root);
-      next();
-    }
-
-    @Override
-    public boolean hasNext() {
-      return cachedNext != null;
-    }
-
-    @Override
-    public Entry<String, V> next() {
-      // this method is going to return the current "next" item, then traverse
-      // ahead to the next "next" item.
-      java.util.Map.Entry<String, V> last = cachedNext;
-      // blank out the "cached" next.
-      cachedNext = null;
-
-      while (! search.isEmpty()) {
-        // see where we left off in our search
-        final Queue<MutableNode<V>> lowestQ = search.getLast();
-        // if there are no more items to investigate at the lowest level, then
-        // go back up a level.
-        if (lowestQ.isEmpty()) {
-          search.removeLast();
-          path.pop();
-          continue;
-        }
-
-        // there's at least one item left in this search level.
-        final MutableNode<V> nextNode = lowestQ.remove();
-
-        // push the new node onto the path. we need this to reconstruct the
-        // keys.
-        path.push(nextNode);
-
-        // enqueue all the new node's children to be searched
-        final LinkedList<MutableNode<V>> nextQ = new LinkedList<MutableNode<V>>();
-        if (nextNode.getChildren() != null) {
-          for (int i = 0; i < nextNode.getChildren().length; i++) {
-            nextQ.add(nextNode.getChildren()[i]);
-          }
-        }
-        search.addLast(nextQ);
-
-        // check if this is a node with a value. if so, then we've found the
-        // "next" value, and we should cache it and exit.
-        if (nextNode.getValue() != null) {
-          // we need to reconstruct the actual string key from all the nodes
-          // above us in the path.
-
-          StringBuilder sb = new StringBuilder();
-          for (int i = path.size() - 2; i >= 0; i--) {
-            sb.append(path.get(i).getPrefix());
-          }
-          final String key = sb.toString();
-
-          // now that we have the key and the value, store the "next" entry so
-          // that the next "next" call can return it.
-          cachedNext = new IteratorEntry(key, nextNode);
-
-          break;
-        }
-      }
-
-      // if we reached here by traversing the entire trie, then cachedNext will
-      // be null, which is perfectly fine - it just mean's we're done iterating.
-      // hooray!
-
-      // finally, return the last item we iterated to.
-      return last;
-    }
-
-    @Override
-    public void remove() {
-      throw new UnsupportedOperationException();
-    }
-  }
-
-  private class EntrySet extends UnmodifiableAbstractSet<Entry<String, V>> {
-    @Override
-    public Iterator<java.util.Map.Entry<String, V>> iterator() {
-      return new EntrySetIterator();
-    }
-
-    @Override
-    public boolean isEmpty() {
-      return StringRadixTreeMap.this.isEmpty();
-    }
-
-    @Override
-    public int size() {
-      return StringRadixTreeMap.this.size();
-    }
-  }
-
   MutableNode<V> root = new MutableNode<V>("".toCharArray(), 0, 0, null);
   private int size = 0;
 
@@ -232,7 +54,7 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
 
   @Override
   public Set<java.util.Map.Entry<String, V>> entrySet() {
-    return new EntrySet();
+    return new EntrySet<V>(this, root);
   }
 
   @Override
@@ -251,7 +73,7 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
 
   @Override
   public Set<String> keySet() {
-    return new KeySet();
+    return new KeySet<V>(this, root);
   }
 
   @Override
