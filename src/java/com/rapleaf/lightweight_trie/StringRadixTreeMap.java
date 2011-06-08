@@ -15,6 +15,7 @@
  */
 package com.rapleaf.lightweight_trie;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -31,6 +32,97 @@ import java.util.Set;
  * @param <V>
  */
 public class StringRadixTreeMap<V> implements Map<String, V> {
+  private final class KeySetIterator implements Iterator<String> {
+    private final EntrySetIterator iterator;
+
+    public KeySetIterator() {
+      iterator = new EntrySetIterator();
+    }
+
+    @Override
+    public boolean hasNext() {
+      return iterator.hasNext();
+    }
+
+    @Override
+    public String next() {
+      return iterator.next().getKey();
+    }
+
+    @Override
+    public void remove() {
+      throw new UnsupportedOperationException();
+    }
+  }
+
+  private final class KeySet implements Set<String> {
+
+    @Override
+    public boolean add(String arg0) {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends String> arg0) {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void clear() {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean contains(Object arg0) {
+      return StringRadixTreeMap.this.containsKey(arg0);
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> arg0) {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isEmpty() {
+      return StringRadixTreeMap.this.isEmpty();
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+      return new KeySetIterator();
+    }
+
+    @Override
+    public boolean remove(Object arg0) {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> arg0) {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> arg0) {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int size() {
+      return StringRadixTreeMap.this.size();
+    }
+
+    @Override
+    public Object[] toArray() {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> T[] toArray(T[] arg0) {
+      throw new UnsupportedOperationException();
+    }
+  }
+
   private final class EntrySetIterator implements Iterator<Entry<String, V>> {
     private final class IteratorEntry implements Entry<String, V> {
       private final String key;
@@ -255,7 +347,7 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
 
   @Override
   public Set<String> keySet() {
-    throw new UnsupportedOperationException();
+    return new KeySet();
   }
 
   @Override
@@ -291,6 +383,10 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
 
   @Override
   public Collection<V> values() {
-    throw new UnsupportedOperationException();
+    ArrayList<V> l = new ArrayList<V>(size());
+    for (Map.Entry<String, V> entry : entrySet()) {
+      l.add(entry.getValue());
+    }
+    return l;
   }
 }

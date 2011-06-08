@@ -15,8 +15,11 @@
  */
 package com.rapleaf.lightweight_trie;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -88,7 +91,6 @@ public class TestStringRadixTreeMap extends TestCase {
     assertEquals(Integer.valueOf(2), map.get("blah"));
   }
 
-  // TODO
   public void testEntrySet() {
     StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
     map.put("blah", 1);
@@ -111,5 +113,32 @@ public class TestStringRadixTreeMap extends TestCase {
     }};
 
     assertEquals(expectedMap, otherMap);
+  }
+
+  public void testKeySet() {
+    StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
+    map.put("blah", 1);
+    map.put("blah2", 2);
+    map.put("foo", 7);
+    map.put("bar", 15);
+    map.put("LONGGGG one", 250);
+
+    Set<String> keys = new HashSet<String>();
+    for (String k : map.keySet()) {
+      keys.add(k);
+    }
+
+    assertEquals(new HashSet<String>(Arrays.asList("blah", "blah2", "foo", "bar", "LONGGGG one")), keys);
+  }
+  
+  public void testValues() {
+    StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
+    map.put("blah", 1);
+    map.put("blah2", 2);
+    map.put("foo", 7);
+    map.put("bar", 15);
+    map.put("LONGGGG one", 250);
+
+    assertEquals(new HashSet(Arrays.asList(1, 2, 7, 15, 250)), new HashSet(map.values()));
   }
 }
