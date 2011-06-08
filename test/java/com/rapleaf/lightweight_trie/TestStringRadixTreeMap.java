@@ -16,6 +16,7 @@
 package com.rapleaf.lightweight_trie;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -88,27 +89,27 @@ public class TestStringRadixTreeMap extends TestCase {
   }
 
   // TODO
-//  public void testEntrySet() {
-//    MutableStringRadixTreeMap<Integer> map = new MutableStringRadixTreeMap<Integer>();
-//    map.put("blah", 1);
-//    map.put("blah2", 2);
-//    map.put("foo", 7);
-//    map.put("bar", 15);
-//    map.put("LONGGGG one", 250);
-//
-//    Map<String, Integer> otherMap = new HashMap<String, Integer>();
-//    for (Map.Entry<String, Integer> entry : map.entrySet()) {
-//      otherMap.put(entry.getKey(), entry.getValue());
-//    }
-//
-//    Map<String, Integer> expectedMap = new HashMap<String, Integer>(){{
-//      put("blah", 1);
-//      put("blah2", 2);
-//      put("foo", 7);
-//      put("bar", 15);
-//      put("LONGGGG one", 250);
-//    }};
-//
-//    assertEquals(expectedMap, otherMap);
-//  }
+  public void testEntrySet() {
+    StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
+    map.put("blah", 1);
+    map.put("blah2", 2);
+    map.put("foo", 7);
+    map.put("bar", 15);
+    map.put("LONGGGG one", 250);
+
+    Map<String, Integer> otherMap = new HashMap<String, Integer>();
+    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+      otherMap.put(entry.getKey(), entry.getValue());
+    }
+
+    Map<String, Integer> expectedMap = new HashMap<String, Integer>(){{
+      put("blah", 1);
+      put("blah2", 2);
+      put("foo", 7);
+      put("bar", 15);
+      put("LONGGGG one", 250);
+    }};
+
+    assertEquals(expectedMap, otherMap);
+  }
 }
