@@ -15,10 +15,7 @@
  */
 package com.rapleaf.lightweight_trie;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * A String-keyed Map implementation backed by a radix tree. This implementation
@@ -28,7 +25,7 @@ import java.util.Set;
  * 
  * @param <V>
  */
-public class StringRadixTreeMap<V> implements Map<String, V> {
+public class StringRadixTreeMap<V> extends AbstractRadixTreeMap<V> {
   MutableNode<V> root = new MutableNode<V>("".toCharArray(), 0, 0, null);
   private int size = 0;
 
@@ -53,11 +50,6 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
   }
 
   @Override
-  public Set<java.util.Map.Entry<String, V>> entrySet() {
-    return new EntrySet<V>(this, root);
-  }
-
-  @Override
   public V get(Object key) {
     if (key instanceof String) {
       final String string = (String) key;
@@ -69,11 +61,6 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
   @Override
   public boolean isEmpty() {
     return size == 0;
-  }
-
-  @Override
-  public Set<String> keySet() {
-    return new KeySet<V>(this, root);
   }
 
   @Override
@@ -108,11 +95,7 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
   }
 
   @Override
-  public Collection<V> values() {
-    ArrayList<V> l = new ArrayList<V>(size());
-    for (Map.Entry<String, V> entry : entrySet()) {
-      l.add(entry.getValue());
-    }
-    return l;
+  protected AbstractNode<V> getRoot() {
+    return root;
   }
 }
