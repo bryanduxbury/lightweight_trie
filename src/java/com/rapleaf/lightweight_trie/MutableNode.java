@@ -18,14 +18,13 @@ package com.rapleaf.lightweight_trie;
 import java.util.Arrays;
 
 
-final class MutableNode<V> {
+final class MutableNode<V> extends AbstractNode<V> {
   private final char[] chars;
 
-  private V value;
   private MutableNode[] children;
 
   public MutableNode(char[] origChars, int off, int len, V value) {
-    this.value = value;
+    super(value);
     chars = new char[len];
     System.arraycopy(origChars, off, chars, 0, len);
   }
@@ -98,7 +97,7 @@ final class MutableNode<V> {
     children[children.length - 1] = new MutableNode(origChars, off, origChars.length - off, value);
   }
 
-  MutableNode[] getChildren() {
+  public MutableNode[] getChildren() {
     return children;
   }
 
