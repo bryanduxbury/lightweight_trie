@@ -15,9 +15,7 @@
  */
 package com.rapleaf.lightweight_trie;
 
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * An immutable String-keyed radix tree that is especially optimized for memory
@@ -25,7 +23,7 @@ import java.util.Set;
  * 
  * @param <V>
  */
-public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
+public class ImmutableStringRadixTreeMap<V> extends AbstractRadixTreeMap<V> {
   private final AbstractNode<V> root;
   private final int size;
 
@@ -67,11 +65,6 @@ public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
   }
 
   @Override
-  public Set<java.util.Map.Entry<String, V>> entrySet() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public V get(Object key) {
     if (key instanceof String) {
       String skey = (String) key;
@@ -86,18 +79,8 @@ public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
   }
 
   @Override
-  public Set<String> keySet() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public int size() {
     return size;
-  }
-
-  @Override
-  public Collection<V> values() {
-    throw new UnsupportedOperationException();
   }
 
   //
@@ -122,5 +105,10 @@ public class ImmutableStringRadixTreeMap<V> implements Map<String, V> {
   @Override
   public void putAll(Map<? extends String, ? extends V> arg0) {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected AbstractNode<V> getRoot() {
+    return root;
   }
 }
