@@ -27,7 +27,7 @@ final class SingleChildNode<V> extends AbstractNode<V> {
 
   @Override
   public AbstractNode<V>[] getChildren() {
-    return null;
+    return new AbstractNode[]{child};
   }
 
   @Override

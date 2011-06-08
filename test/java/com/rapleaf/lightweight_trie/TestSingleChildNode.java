@@ -24,5 +24,6 @@ public class TestSingleChildNode extends TestCase {
     assertEquals(Integer.valueOf(7), node.get("abc".toCharArray(), 0));
     assertNull(node.get("abd".toCharArray(), 0));
     assertNull(node.get("ab".toCharArray(), 0));
+    assertEquals(child, node.getChildren()[0]);
   }
 }
