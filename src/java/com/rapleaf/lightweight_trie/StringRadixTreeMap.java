@@ -55,31 +55,10 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
     }
   }
 
-  private final class KeySet implements Set<String> {
-
-    @Override
-    public boolean add(String arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends String> arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void clear() {
-      throw new UnsupportedOperationException();
-    }
-
+  private final class KeySet extends UnmodifiableAbstractSet<String> {
     @Override
     public boolean contains(Object arg0) {
       return StringRadixTreeMap.this.containsKey(arg0);
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> arg0) {
-      throw new UnsupportedOperationException();
     }
 
     @Override
@@ -93,33 +72,8 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
     }
 
     @Override
-    public boolean remove(Object arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
     public int size() {
       return StringRadixTreeMap.this.size();
-    }
-
-    @Override
-    public Object[] toArray() {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> T[] toArray(T[] arg0) {
-      throw new UnsupportedOperationException();
     }
   }
 
@@ -236,20 +190,10 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
     }
   }
 
-  private class EntrySet implements Set<Entry<String, V>> {
+  private class EntrySet extends UnmodifiableAbstractSet<Entry<String, V>> {
     @Override
     public Iterator<java.util.Map.Entry<String, V>> iterator() {
       return new EntrySetIterator();
-    }
-
-    @Override
-    public boolean add(java.util.Map.Entry<String, V> arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends java.util.Map.Entry<String, V>> arg0) {
-      throw new UnsupportedOperationException();
     }
 
     @Override
@@ -263,43 +207,13 @@ public class StringRadixTreeMap<V> implements Map<String, V> {
     }
 
     @Override
-    public boolean containsAll(Collection<?> arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean isEmpty() {
       return StringRadixTreeMap.this.isEmpty();
     }
 
     @Override
-    public boolean remove(Object arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> arg0) {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
     public int size() {
       return StringRadixTreeMap.this.size();
-    }
-
-    @Override
-    public Object[] toArray() {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> T[] toArray(T[] arg0) {
-      throw new UnsupportedOperationException();
     }
   }
 
