@@ -15,6 +15,8 @@
  */
 package com.rapleaf.lightweight_trie;
 
+import java.util.Set;
+
 final class SingleChildNode<V> extends AbstractNode<V> {
   private final char[] prefix;
   private final AbstractNode<V> child;
@@ -45,5 +47,14 @@ final class SingleChildNode<V> extends AbstractNode<V> {
       return child.get(toInsert, startOffset + commonLength);
     }
     return null;
+  }
+
+  @Override
+  public void getPartialMatches(Set<String> partialMatches, char[] searchArr, int searchArrOffset) {
+    int commonLength = Utils.getCommonLength(searchArr, searchArrOffset, child.getPrefix());
+    if (commonLength == child.getPrefix().length) {
+      partialMatches.add(new String(searchArr, 0, searchArrOffset + commonLength));
+      child.getPartialMatches(partialMatches, searchArr, searchArrOffset + commonLength);
+    }
   }
 }

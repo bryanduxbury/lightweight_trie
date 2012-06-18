@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import junit.framework.TestCase;
 
@@ -112,5 +113,21 @@ public class TestImmutableStringRadixTreeMap extends TestCase {
     ImmutableStringRadixTreeMap<Integer> imap = new ImmutableStringRadixTreeMap<Integer>(map);
 
     assertEquals(new HashSet(Arrays.asList(1, 2, 7, 15, 250)), new HashSet(imap.values()));
+  }
+
+  public void testGetPartialMatches() {
+    StringRadixTreeMap<Integer> map = new StringRadixTreeMap<Integer>();
+    map.put("a", 1);
+    map.put("ab", 2);
+    map.put("abcd", 3);
+    map.put("abcde", 4);
+    map.put("ac", 5);
+    ImmutableStringRadixTreeMap<Integer> imap = new ImmutableStringRadixTreeMap<Integer>(map);
+
+    assertEquals(new TreeSet(Arrays.asList("a", "ab", "abcd", "abcde")), new TreeSet(imap.getPartialMatches("abcdef")));
+    assertEquals(new TreeSet(Arrays.asList("a")), new TreeSet(imap.getPartialMatches("a")));
+    assertEquals(new TreeSet(Arrays.asList("a")), new TreeSet(imap.getPartialMatches("azzzzzzzzz")));
+    assertEquals(new TreeSet(Arrays.asList("a", "ac")), new TreeSet(imap.getPartialMatches("accc")));
+    assertEquals(new TreeSet(Arrays.asList("a", "ab")), new TreeSet(imap.getPartialMatches("abc")));
   }
 }

@@ -15,6 +15,8 @@
  */
 package com.rapleaf.lightweight_trie;
 
+import java.util.Set;
+
 /**
  * Node implementation that doesn't allow for children (to save bytes)
  * 
@@ -42,5 +44,10 @@ final class LeafNode<V> extends AbstractNode<V> {
   public V get(char[] toInsert, int startOffset) {
     // if we got here, then we definitely didn't find it.
     return null;
+  }
+
+  @Override
+  public void getPartialMatches(Set<String> partialMatches, char[] searchArr, int searchArrOffset) {
+    // empty, because all the matching should occur a level higher
   }
 }

@@ -15,7 +15,9 @@
  */
 package com.rapleaf.lightweight_trie;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * An immutable String-keyed radix tree that is especially optimized for memory
@@ -110,5 +112,11 @@ public class ImmutableStringRadixTreeMap<V> extends AbstractRadixTreeMap<V> {
   @Override
   protected AbstractNode<V> getRoot() {
     return root;
+  }
+
+  public Set<String> getPartialMatches(String string) {
+    Set<String> partialMatches = new HashSet<String>();
+    root.getPartialMatches(partialMatches, string.toCharArray(), 0);
+    return partialMatches;
   }
 }

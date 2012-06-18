@@ -15,6 +15,8 @@
  */
 package com.rapleaf.lightweight_trie;
 
+import java.util.Set;
+
 final class MutableNode<V> extends AbstractNode<V> {
   private final char[] chars;
 
@@ -144,5 +146,10 @@ final class MutableNode<V> extends AbstractNode<V> {
 
   public V getValue() {
     return value;
+  }
+
+  @Override
+  public void getPartialMatches(Set<String> partialMatches, char[] searchArr, int searchArrOffset) {
+    throw new UnsupportedOperationException();
   }
 }

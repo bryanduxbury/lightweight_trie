@@ -16,6 +16,7 @@
 package com.rapleaf.lightweight_trie;
 
 import java.util.Arrays;
+import java.util.Set;
 
 abstract class AbstractNode<V> {
   protected V value;
@@ -40,4 +41,6 @@ abstract class AbstractNode<V> {
         + ", value=" + value + ", getChildren()="
         + Arrays.toString(getChildren()) + ">";
   }
+
+  public abstract void getPartialMatches(Set<String> partialMatches, char[] searchArr, int searchArrOffset);
 }
