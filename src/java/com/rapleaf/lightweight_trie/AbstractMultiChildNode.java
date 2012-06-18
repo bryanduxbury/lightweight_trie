@@ -35,22 +35,19 @@ public abstract class AbstractMultiChildNode<V> extends AbstractNode<V> {
       int commonLength = Utils.getCommonLength(searchArr, startOffset, childNode.getPrefix());
 
       // if there was any match...
-      if (commonLength > 0) {
+      if (commonLength == childNode.getPrefix().length) {
         // it could have been an exact match, which would indicate we found it
-        if (commonLength == searchArr.length - startOffset && childNode.getPrefix().length == commonLength) {
+        if (searchArr.length == commonLength + startOffset) {
           // it's an exact match!
           return childNode.value;
+        } else {
+          // the search string is longer than the child's prefix, so we need to
+          // recurse
+          return childNode.get(searchArr, startOffset + commonLength);
         }
-        // it could be a partial match, but short...
-        if (commonLength < childNode.getPrefix().length) {
-          // the child node and the search string share a prefix, but the child
-          // node is longer than the match length. the search string can't be in
-          // the tree.
-          return null;
-        }
-        // the search string is longer than the child's prefix, so we need to
-        // recurse
-        return childNode.get(searchArr, startOffset + commonLength);
+      } else if (commonLength > 0) {
+        // any partial match means we're at a dead end. return immediately.
+        return null;
       }
     }
 
