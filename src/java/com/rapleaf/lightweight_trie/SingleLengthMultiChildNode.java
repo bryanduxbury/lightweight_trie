@@ -12,4 +12,9 @@ public class SingleLengthMultiChildNode<V> extends AbstractMultiChildNode<V> {
   public char[] getPrefix() {
     return new char[]{prefix};
   }
+
+  @Override
+  public char getPrefixFirst() {
+    return prefix;
+  }
 }

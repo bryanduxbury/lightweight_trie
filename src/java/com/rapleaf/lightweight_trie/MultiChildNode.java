@@ -29,4 +29,9 @@ final class MultiChildNode<V> extends AbstractMultiChildNode<V> {
   public char[] getPrefix() {
     return prefix;
   }
+
+  @Override
+  public char getPrefixFirst() {
+    return prefix[0];
+  }
 }

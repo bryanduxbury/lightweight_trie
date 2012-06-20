@@ -58,4 +58,9 @@ final class SingleChildNode<V> extends AbstractNode<V> {
       child.getPartialMatches(partialMatches, searchArr, searchArrOffset + commonLength);
     }
   }
+
+  @Override
+  public char getPrefixFirst() {
+    return prefix[0];
+  }
 }

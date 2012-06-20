@@ -152,4 +152,9 @@ final class MutableNode<V> extends AbstractNode<V> {
   public void getPartialMatches(Set<String> partialMatches, char[] searchArr, int searchArrOffset) {
     throw new UnsupportedOperationException();
   }
+
+  @Override
+  public char getPrefixFirst() {
+    return chars[0];
+  }
 }

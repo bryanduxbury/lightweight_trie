@@ -50,4 +50,9 @@ final class LeafNode<V> extends AbstractNode<V> {
   public void getPartialMatches(Set<String> partialMatches, char[] searchArr, int searchArrOffset) {
     // empty, because all the matching should occur a level higher
   }
+
+  @Override
+  public char getPrefixFirst() {
+    return prefix[0];
+  }
 }

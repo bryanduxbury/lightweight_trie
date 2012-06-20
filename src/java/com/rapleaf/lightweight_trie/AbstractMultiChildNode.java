@@ -39,8 +39,7 @@ public abstract class AbstractMultiChildNode<V> extends AbstractNode<V> {
       AbstractNode<V> childNode = children[mid];
 
       // common case: key and the child prefix will have zero chars in common
-      final char[] childPrefix = childNode.getPrefix();
-      char childPrefixFirst = childPrefix[0];
+      char childPrefixFirst = childNode.getPrefixFirst();
 
       if (keyPrefixFirst < childPrefixFirst) {
         // not the right key. keep binary searching the next child.
@@ -60,6 +59,7 @@ public abstract class AbstractMultiChildNode<V> extends AbstractNode<V> {
       // longer than what's left in the search key, as that would guarantee a
       // non-match.
       // TODO: evaluate if this is actually beneficial
+      final char[] childPrefix = childNode.getPrefix();
       if (childPrefix.length > searchArr.length - startOffset) {
         return null;
       }

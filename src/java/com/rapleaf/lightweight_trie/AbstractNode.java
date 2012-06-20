@@ -35,6 +35,8 @@ abstract class AbstractNode<V> {
 
   public abstract char[] getPrefix();
 
+  public abstract char getPrefixFirst();
+
   @Override
   public String toString() {
     return getClass().getSimpleName() + " <getPrefix()=" + Arrays.toString(getPrefix())
