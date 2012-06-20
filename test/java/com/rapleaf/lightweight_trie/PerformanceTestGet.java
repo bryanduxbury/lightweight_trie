@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class PerformanceTestGet {
   public static void main(String[] args) throws Exception {
@@ -23,6 +24,10 @@ public class PerformanceTestGet {
       strings.add(l);
     }
 
+    long hashMapCount = 0;
+    long trieCount = 0;
+    long immutableTrieCount = 0;
+
     Map<String, Integer> hashMap = new HashMap<String, Integer>();
     StringRadixTreeMap<Integer> trieMap = new StringRadixTreeMap<Integer>();
 
@@ -33,19 +38,28 @@ public class PerformanceTestGet {
 
     Map<String, Integer> optTrieMap = new ImmutableStringRadixTreeMap<Integer>(trieMap);
 
-    Collections.shuffle(strings);
+    Collections.shuffle(strings, new Random(1));
 
-    perfTest("hashmap", hashMap, strings);
-    perfTest("trie", trieMap, strings);
-    perfTest("immutable trie", optTrieMap, strings);
+    for (int trial = 0; trial < 50; trial++) {
+  
+      hashMapCount += perfTest("hashmap", hashMap, strings);
+      trieCount += perfTest("trie", trieMap, strings);
+      immutableTrieCount += perfTest("immutable trie", optTrieMap, strings);
+    }
+
+    System.out.println("hashmap\t" + hashMapCount);
+    System.out.println("trie\t" + trieCount);
+    System.out.println("i-trie\t" + immutableTrieCount);
   }
 
-  private static void perfTest(String title, Map<String, Integer> map, List<String> strings) {
+  private static long perfTest(String title, Map<String, Integer> map, List<String> strings) {
+    System.gc();System.gc();System.gc();System.gc();
     long start = System.currentTimeMillis();
     for (int i = 0; i < strings.size(); i++) {
-      map.get(strings.get(i));
+      final String s = strings.get(i);
+      map.get(s);
     }
     long end = System.currentTimeMillis();
-    System.out.println(title + ": " + (end - start) + "ms");
+    return (end - start);
   }
 }

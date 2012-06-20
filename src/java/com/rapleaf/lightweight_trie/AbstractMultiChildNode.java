@@ -28,27 +28,60 @@ public abstract class AbstractMultiChildNode<V> extends AbstractNode<V> {
 
   @Override
   public final V get(char[] searchArr, int startOffset) {
-    // there are existing children. scan them to see if there are any with
+    // there are existing children. binary search them to see if there are any with
     // matching prefixes
-    for (int i = 0; i < children.length; i++) {
-      AbstractNode<V> childNode = children[i];
-      int commonLength = Utils.getCommonLength(searchArr, startOffset, childNode.getPrefix());
+    int lower = 0;
+    int upper = children.length - 1;
+    char keyPrefixFirst = searchArr[startOffset];
+    while (lower != upper) {
+      // pick the midpoint
+      int mid = lower + (upper - lower) / 2;
+      AbstractNode<V> childNode = children[mid];
 
-      // if there was any match...
-      if (commonLength == childNode.getPrefix().length) {
-        // it could have been an exact match, which would indicate we found it
-        if (searchArr.length == commonLength + startOffset) {
-          // it's an exact match!
-          return childNode.value;
-        } else {
-          // the search string is longer than the child's prefix, so we need to
-          // recurse
-          return childNode.get(searchArr, startOffset + commonLength);
-        }
-      } else if (commonLength > 0) {
-        // any partial match means we're at a dead end. return immediately.
+      // common case: key and the child prefix will have zero chars in common
+      final char[] childPrefix = childNode.getPrefix();
+      char childPrefixFirst = childPrefix[0];
+
+      if (keyPrefixFirst < childPrefixFirst) {
+        // not the right key. keep binary searching the next child.
+        upper = mid - 1;
+        continue;
+      } else if (keyPrefixFirst > childPrefixFirst) {
+        // not the right key. keep binary searching the next child.
+        lower = mid + 1;
+        continue;
+      }
+
+      // if we get here the, the first chars match, which is exciting. if the
+      // rest of the strings don't match exactly, we don't have to explore any
+      // further.
+
+      // a quick check we can do is to see if this current child prefix is
+      // longer than what's left in the search key, as that would guarantee a
+      // non-match.
+      // TODO: evaluate if this is actually beneficial
+      if (childPrefix.length > searchArr.length - startOffset) {
         return null;
       }
+
+      // now let's check if the next bit of searchArr matches the prefix. we
+      // already checked the first char, so we can start with 1. note that this
+      // will short-circuit itself right away if the child prefix is only 1
+      // char.
+      for (int i = 1; i < childPrefix.length; i++) {
+        if (childPrefix[i] != searchArr[startOffset + i]) {
+          return null;
+        }
+      }
+
+      // if we reach this point, then we've got a child match. 
+      // if there is no more searchArr left, then return the value we found.
+      if (searchArr.length == childPrefix.length + startOffset) {
+        return childNode.value;
+      }
+
+      // if there's more then we need to recurse.
+      return childNode.get(searchArr, startOffset + childPrefix.length);
     }
 
     // didn't find a sub-match

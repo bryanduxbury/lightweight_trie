@@ -15,6 +15,8 @@
  */
 package com.rapleaf.lightweight_trie;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -50,6 +52,21 @@ public class ImmutableStringRadixTreeMap<V> extends AbstractRadixTreeMap<V> {
     for (int i = 0; i < optimizedChildren.length; i++) {
       optimizedChildren[i] = optimize(n.getChildren()[i]);
     }
+    Arrays.sort(optimizedChildren, new Comparator<AbstractNode<V>>(){
+      @Override
+      public int compare(AbstractNode<V> arg0, AbstractNode<V> arg1) {
+        char[] prefix0 = arg0.getPrefix();
+        char[] prefix1 = arg1.getPrefix();
+        for (int i = 0; i < Math.min(prefix0.length, prefix1.length); i++) {
+          if (prefix0[i] < prefix1[i]) {
+            return -1;
+          } else if (prefix0[i] > prefix1[i]) {
+            return 1;
+          }
+        }
+        throw new IllegalStateException("Nodes " + arg0 + " and " + arg1 + " have matching prefixes!");
+      }
+    });
     if (n.getPrefix().length == 1) {
       return new SingleLengthMultiChildNode<V>(n.getPrefix()[0], n.getValue(), optimizedChildren);
     }
