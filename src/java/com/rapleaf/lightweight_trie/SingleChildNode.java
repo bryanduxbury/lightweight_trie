@@ -38,13 +38,13 @@ final class SingleChildNode<V> extends AbstractNode<V> {
   }
 
   @Override
-  public V get(char[] toInsert, int startOffset) {
-    int commonLength = Utils.getCommonLength(toInsert, startOffset, child.getPrefix());
+  public V get(char[] searchArr, int startOffset) {
+    int commonLength = Utils.getCommonLength(searchArr, startOffset, child.getPrefix());
     if (commonLength == child.getPrefix().length) {
-      if (toInsert.length == commonLength + startOffset) {
+      if (searchArr.length == commonLength + startOffset) {
         return child.value;
       } else {
-        return child.get(toInsert, startOffset + commonLength);
+        return child.get(searchArr, startOffset + commonLength);
       }
     }
     return null;

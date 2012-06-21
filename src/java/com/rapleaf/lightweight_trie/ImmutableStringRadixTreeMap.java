@@ -15,9 +15,11 @@
  */
 package com.rapleaf.lightweight_trie;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -68,9 +70,28 @@ public class ImmutableStringRadixTreeMap<V> extends AbstractRadixTreeMap<V> {
       }
     });
     if (n.getPrefix().length == 1) {
+//      if (isContiguous(optimizedChildren)) {
+//        return new ContiguousRangeNode<V>(n.getPrefixFirst(), n.getValue(), optimizedChildren);
+//      }
       return new SingleLengthMultiChildNode<V>(n.getPrefix()[0], n.getValue(), optimizedChildren);
     }
+    
+//    // special case for the root
+//    if (n.getPrefix().length == 0) {
+//      if (isContiguous(optimizedChildren)) {
+//        return new ContiguousRangeNode<V>('\0', n.getValue(), optimizedChildren);
+//      }
+//    }
     return new MultiChildNode<V>(n.getPrefix(), n.getValue(), optimizedChildren);
+  }
+
+  private boolean isContiguous(AbstractNode<V>[] optimizedChildren) {
+    for (int i = 0; i < optimizedChildren.length - 1; i++) {
+      if (optimizedChildren[i].getPrefixFirst() - optimizedChildren[i+1].getPrefixFirst() != -1) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override
@@ -135,5 +156,11 @@ public class ImmutableStringRadixTreeMap<V> extends AbstractRadixTreeMap<V> {
     Set<String> partialMatches = new HashSet<String>();
     root.getPartialMatches(partialMatches, string.toCharArray(), 0);
     return partialMatches;
+  }
+  
+  public List<String> getNodeAnalysis() {
+    List<String> results = new ArrayList<String>();
+    root.getNodeAnalysis(results, 0);
+    return results;
   }
 }

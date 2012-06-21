@@ -36,12 +36,12 @@ final class LeafNode<V> extends AbstractNode<V> {
   }
 
   @Override
-  public char[] getPrefix() {
+  public final char[] getPrefix() {
     return prefix;
   }
 
   @Override
-  public V get(char[] toInsert, int startOffset) {
+  public V get(char[] searchArr, int startOffset) {
     // if we got here, then we definitely didn't find it.
     return null;
   }

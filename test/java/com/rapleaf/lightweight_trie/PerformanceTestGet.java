@@ -36,12 +36,17 @@ public class PerformanceTestGet {
       trieMap.put(strings.get(i), i);
     }
 
-    Map<String, Integer> optTrieMap = new ImmutableStringRadixTreeMap<Integer>(trieMap);
+    ImmutableStringRadixTreeMap<Integer> optTrieMap = new ImmutableStringRadixTreeMap<Integer>(trieMap);
 
+//    final List<String> nodeAnalysis = optTrieMap.getNodeAnalysis();
+//    for (String s : nodeAnalysis) {
+//      System.out.println(s);
+//    }
+//    System.exit(1);
+    
     Collections.shuffle(strings, new Random(1));
 
     for (int trial = 0; trial < 50; trial++) {
-  
       hashMapCount += perfTest("hashmap", hashMap, strings);
       trieCount += perfTest("trie", trieMap, strings);
       immutableTrieCount += perfTest("immutable trie", optTrieMap, strings);

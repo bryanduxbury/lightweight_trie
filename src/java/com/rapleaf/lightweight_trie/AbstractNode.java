@@ -16,6 +16,7 @@
 package com.rapleaf.lightweight_trie;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 abstract class AbstractNode<V> {
@@ -29,7 +30,7 @@ abstract class AbstractNode<V> {
     return value;
   }
 
-  public abstract V get(char[] toInsert, int startOffset);
+  public abstract V get(char[] searchArr, int startOffset);
 
   public abstract AbstractNode<V>[] getChildren();
 
@@ -45,4 +46,21 @@ abstract class AbstractNode<V> {
   }
 
   public abstract void getPartialMatches(Set<String> partialMatches, char[] searchArr, int searchArrOffset);
+
+  public void getNodeAnalysis(List<String> results, int depth) {
+    int childrenLength = 0;
+    if (getChildren() != null) {
+      childrenLength = getChildren().length;
+    }
+    int prefixLength = 0;
+    if (getPrefix() != null) {
+      prefixLength = getPrefix().length;
+    }
+    results.add(this.getClass().getSimpleName() + " " + childrenLength + " " + prefixLength + " " + depth);
+    if (getChildren() != null) {
+      for (AbstractNode<V> child : getChildren()) {
+        child.getNodeAnalysis(results, depth + 1);
+      }
+    }
+  }
 }
