@@ -52,11 +52,52 @@ final class SingleChildNode<V> extends AbstractNode<V> {
 
   @Override
   public void getPartialMatches(Set<String> partialMatches, char[] searchArr, int searchArrOffset) {
-    int commonLength = Utils.getCommonLength(searchArr, searchArrOffset, child.getPrefix());
-    if (commonLength == child.getPrefix().length) {
-      partialMatches.add(new String(searchArr, 0, searchArrOffset + commonLength));
-      child.getPartialMatches(partialMatches, searchArr, searchArrOffset + commonLength);
+    char keyPrefixFirst = searchArr[searchArrOffset];
+    char childPrefixFirst = child.getPrefixFirst();
+    if (keyPrefixFirst == childPrefixFirst) {
+      // if we get here the, the first chars match, which is exciting. if the
+      // rest of the strings don't match exactly, we don't have to explore any
+      // further.
+
+      // a quick check we can do is to see if this current child prefix is
+      // longer than what's left in the search key, as that would guarantee a
+      // non-match.
+      // TODO: evaluate if this is actually beneficial
+      final char[] childPrefix = child.getPrefix();
+      if (childPrefix.length > searchArr.length - searchArrOffset) {
+        return;
+      }
+
+      // now let's check if the next bit of searchArr matches the prefix. we
+      // already checked the first char, so we can start with 1. note that this
+      // will short-circuit itself right away if the child prefix is only 1
+      // char.
+      for (int i = 1; i < childPrefix.length; i++) {
+        if (childPrefix[i] != searchArr[searchArrOffset + i]) {
+          return;
+        }
+      }
+
+      // if we reach this point, then we've got a child match. 
+      // if this child has value, then add that partial match.
+      if (child.value != null) {
+        partialMatches.add(new String(searchArr, 0, searchArrOffset + childPrefix.length));
+      }
+
+      // recurse if there's any searchArr left
+      if (searchArrOffset + childPrefix.length < searchArr.length) {
+        child.getPartialMatches(partialMatches, searchArr, searchArrOffset + childPrefix.length);
+      }
     }
+//    int commonLength = Utils.getCommonLength(searchArr, searchArrOffset, child.getPrefix());
+//    if (commonLength == child.getPrefix().length) {
+//      if (child.value != null) {
+//        partialMatches.add(new String(searchArr, 0, searchArrOffset + commonLength));
+//      }
+//      if (searchArrOffset + commonLength < searchArr.length) {
+//        child.getPartialMatches(partialMatches, searchArr, searchArrOffset + commonLength);
+//      }
+//    }
   }
 
   @Override

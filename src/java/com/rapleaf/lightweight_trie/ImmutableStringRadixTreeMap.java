@@ -85,14 +85,14 @@ public class ImmutableStringRadixTreeMap<V> extends AbstractRadixTreeMap<V> {
     return new MultiChildNode<V>(n.getPrefix(), n.getValue(), optimizedChildren);
   }
 
-  private boolean isContiguous(AbstractNode<V>[] optimizedChildren) {
-    for (int i = 0; i < optimizedChildren.length - 1; i++) {
-      if (optimizedChildren[i].getPrefixFirst() - optimizedChildren[i+1].getPrefixFirst() != -1) {
-        return false;
-      }
-    }
-    return true;
-  }
+//  private boolean isContiguous(AbstractNode<V>[] optimizedChildren) {
+//    for (int i = 0; i < optimizedChildren.length - 1; i++) {
+//      if (optimizedChildren[i].getPrefixFirst() - optimizedChildren[i+1].getPrefixFirst() != -1) {
+//        return false;
+//      }
+//    }
+//    return true;
+//  }
 
   @Override
   public boolean containsKey(Object arg0) {
